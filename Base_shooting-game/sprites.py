@@ -196,6 +196,7 @@ class Friendship(MasterSprite):
         # self.shield, self.rect = load_image('ship_shield.png', -1)
         self.screen = pygame.display.get_surface()
         self.area = self.screen.get_rect()
+        self.rect.midbottom = (self.screen.get_width() // 3, self.area.bottom)
         # self.rect.midright = (self.screen.get_width() // 2, self.area.bottom)
         self.radius = max(self.rect.width, self.rect.height)
         self.alive = True
