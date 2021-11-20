@@ -1,7 +1,7 @@
 import pygame
 import random
 
-from sprites import (MasterSprite, Ship, Alien, Missile, BombPowerup,
+from sprites import (MasterSprite, Ship, Friendship, Alien, Missile, BombPowerup,
                      ShieldPowerup, DoublemissilePowerup, FriendPowerup, Explosion, Siney, Spikey, Fasty,
                      Roundy, Crawly)
 from database import Database
@@ -78,6 +78,7 @@ def main():
     clockTime = 60  # maximum FPS
     clock = pygame.time.Clock()
     ship = Ship()
+    miniship = Friendship()
     
     initialAlienTypes = (Siney, Spikey)
     # 수정
@@ -90,7 +91,7 @@ def main():
 
     # Sprite groups
     alldrawings = pygame.sprite.Group()
-    allsprites = pygame.sprite.RenderPlain((ship,))
+    allsprites = pygame.sprite.RenderPlain((ship,miniship,))
     MasterSprite.allsprites = allsprites
     Alien.pool = pygame.sprite.Group(
         [alien() for alien in initialAlienTypes for _ in range(5)])
@@ -124,6 +125,8 @@ def main():
     doublemissile = False
     # 수정
     friendship = False
+    miniship.alive = True
+    
     bombsHeld = 3
     score = 0
     missilesFired = 0

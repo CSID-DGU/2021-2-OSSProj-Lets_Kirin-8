@@ -1,7 +1,7 @@
 import pygame
 import random
 
-from sprites import (MasterSprite, Ship, Alien, Missile, BombPowerup,
+from sprites import (MasterSprite, Ship, Friendship, Alien, Missile, BombPowerup,
                      ShieldPowerup, DoublemissilePowerup, FriendPowerup, Explosion, Siney, Spikey, Fasty,
                      Roundy, Crawly)
 from database import Database
@@ -77,6 +77,7 @@ class Single():
         clockTime = 60  # maximum FPS
         clock = pygame.time.Clock()
         ship = Ship()
+        miniship = Friendship()
         
         initialAlienTypes = (Siney, Spikey)
         # 수정
@@ -89,7 +90,7 @@ class Single():
 
         # Sprite groups
         alldrawings = pygame.sprite.Group()
-        allsprites = pygame.sprite.RenderPlain((ship,))
+        allsprites = pygame.sprite.RenderPlain((ship,miniship,))
         MasterSprite.allsprites = allsprites
         Alien.pool = pygame.sprite.Group(
             [alien() for alien in initialAlienTypes for _ in range(5)])
@@ -123,6 +124,8 @@ class Single():
         doublemissile = False
         # 수정
         friendship = False
+        miniship.alive = True
+
         bombsHeld = 3
         score = 0
         missilesFired = 0
@@ -173,7 +176,7 @@ class Single():
 
             # Reset Sprite groups
             alldrawings = pygame.sprite.Group()
-            allsprites = pygame.sprite.RenderPlain((ship,))
+            allsprites = pygame.sprite.RenderPlain((ship,miniship,))
             MasterSprite.allsprites = allsprites
             Alien.pool = pygame.sprite.Group(
                 [alien() for alien in initialAlienTypes for _ in range(5)])
@@ -198,6 +201,7 @@ class Single():
             betweenDoubleTime = 8 * clockTime
             betweenDoubleCount = betweenDoubleTime
             ship.alive = True
+            miniship.alive = True
 
             # pause 메뉴 글씨  
             restartText = font.render('RESTART GAME', 1, BLACK)
@@ -246,10 +250,14 @@ class Single():
                         and event.key in direction.keys()):
                         ship.horiz += direction[event.key][0] * speed
                         ship.vert += direction[event.key][1] * speed
+                        miniship.horiz = ship.horiz 
+                        miniship.vert = ship.vert
                     elif (event.type == pygame.KEYUP
                         and event.key in direction.keys()):
                         ship.horiz -= direction[event.key][0] * speed
                         ship.vert -= direction[event.key][1] * speed
+                        miniship.horiz = ship.horiz 
+                        miniship.vert = ship.vert
                     # Missile
                     elif (event.type == pygame.KEYDOWN
                         and event.key == pygame.K_SPACE):
@@ -259,6 +267,8 @@ class Single():
                             missilesFired += 2
                         else : 
                             Missile.position(ship.rect.midtop)
+                            Missile.position(miniship.rect.midtop)
+                            missilesFired += 1  
                             missilesFired += 1
                         if soundFX:
                             missile_sound.play()
@@ -401,8 +411,9 @@ class Single():
                             ship.shieldUp = True
                         elif powerup.pType == 'doublemissile' :
                             doublemissile = True
-                        elif powerup.pType == 'friendship' :
-                            friendship = True    
+                        # elif powerup.pType == 'friendship' :
+                        #     friendship = True
+                        #     miniship.alive = True  
                         powerup.kill()
                     elif powerup.rect.top > powerup.area.bottom:
                         powerup.kill()
@@ -436,6 +447,13 @@ class Single():
                     elif betweenDoubleCount == 0:
                         doublemissile = False
                         betweenDoubleCount = betweenDoubleTime
+                
+                # if friendship:
+                #     if betweenDoubleCount > 0:
+                #         betweenDoubleCount -= 1
+                #     elif betweenDoubleCount == 0:
+                #         friendship = False
+                #         betweenDoubleCount = betweenDoubleTime
 
             # Detertmine when to move to next wave
                 if aliensLeftThisWave <= 0:
