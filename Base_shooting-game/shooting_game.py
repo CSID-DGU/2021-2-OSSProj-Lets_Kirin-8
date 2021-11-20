@@ -209,10 +209,10 @@ def main():
     selection = 1
     showSelectModes=False
     showHiScores = False
-    soundFX = Database().getSound()
-    music = Database().getSound(music=True)
-    if music and pygame.mixer: 
-        pygame.mixer.music.play(loops=-1)
+    # soundFX = Database().getSound()
+    # music = Database().getSound(music=True)
+    # if music and pygame.mixer: 
+    #     pygame.mixer.music.play(loops=-1)
 
 
 #########################

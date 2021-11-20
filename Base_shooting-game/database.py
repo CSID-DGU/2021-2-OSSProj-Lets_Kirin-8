@@ -6,18 +6,18 @@ class Database(object):
         self.scoreDB=pymysql.connect(host=host,user=user,password=password,db=db,charset=charset)
         self.cursor=self.scoreDB.cursor(pymysql.cursors.DictCursor)
 
-    def getSound(self,music=False):
-        curs = self.scoreDB.cursor(pymysql.cursors.DictCursor)
-        if music:
-            curs.execute("CREATE TABLE if not exists music (setting integer)")
-            curs.execute("SELECT * FROM music")
-        else:
-            curs.execute("CREATE TABLE if not exists sound (setting integer)")
-            curs.execute("SELECT * FROM sound")
-        self.scoreDB.commit()
-        setting = curs.fetchall()
-        curs.close()
-        return bool(setting[0][0]) if len(setting) > 0 else False
+    # def getSound(self,music=False):
+    #     curs = self.scoreDB.cursor(pymysql.cursors.DictCursor)
+    #     if music:
+    #         curs.execute("CREATE TABLE if not exists music (setting integer)")
+    #         curs.execute("SELECT * FROM music")
+    #     else:
+    #         curs.execute("CREATE TABLE if not exists sound (setting integer)")
+    #         curs.execute("SELECT * FROM sound")
+    #     self.scoreDB.commit()
+    #     setting = curs.fetchall()
+    #     curs.close()
+    #     return bool(setting[0][0]) if len(setting) > 0 else False
 
     def setSound(self,setting, music=False):
         curs = self.scoreDB.cursor()
