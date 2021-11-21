@@ -310,15 +310,13 @@ def main():
 
     if selectMode == 'SingleMode':
         print('Single mode play')
-        while True:
-            Single.play()
+        Single.play()
     elif selectMode == 'TimeMode':
         print('Time mode play')
-        while True:
-            Time.play()
+        Time.play()
     elif selectMode == 'PvpMode':
         print('Pvp mode play')
-        #Pvp.play()    
+        Pvp.play()    
 
 
 if __name__ == '__main__':

@@ -744,7 +744,7 @@ def main():
                 scoreText2 = font.render("Score: " + str(score2), 1, WHITE)
                 bombText2 = font.render("Bombs: " + str(bombsHeld2), 1, WHITE)
                 lifeText2 = font.render("Life: ", 1, WHITE)
-                ship2winText = font.render('PLAYER 2 WIN!', 1, WHITE) 
+                ship2winText = font.render('PLAYER 2 WIN!', 1, WHITE)
                 drawText = font.render('DRAW!', 1, WHITE)
 
     
@@ -761,7 +761,8 @@ def main():
             drawPos = drawText.get_rect(center=screen.get_rect().center)
 
             text = [waveText, leftText, scoreText, scoreText2, bombText, bombText2, lifeText, lifeText2]
-            textposition = [wavePos, leftPos, scorePos, bombPos, lifePos, scorePos2, bombPos2, lifePos2]
+            # textposition = [wavePos, leftPos, scorePos, bombPos, lifePos, scorePos2, bombPos2, lifePos2]
+            textposition = [wavePos, leftPos, scorePos, scorePos2]
 
             if doublemissile:
                 if betweenDoubleCount > 0:
@@ -847,7 +848,7 @@ def main():
                 screen.blit(txt, pos)
 
         # Update life
-            life1Rect.topleft = lifePos.topright
+            # life1Rect.topleft = lifePos.topright
             life2Rect.topleft = life1Rect.topright
             life3Rect.topleft = life2Rect.topright
 
